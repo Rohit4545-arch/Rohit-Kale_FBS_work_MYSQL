@@ -1,0 +1,163 @@
+Assignment 2
+
+
+
+
+q1)
+ans  create table member
+     (member_id int unique,
+     member_name varchar (50),
+     member_address varchar (50),
+      acc_open_date date,
+     membership_type varchar (50),
+     fees_paid decimal (10,2),
+     max_books_allowed int ,
+     penalty_amount decimal (10,2));
+   
+    create table books (
+    -> book_no int ,
+    -> book_name varchar (30),
+    -> aurthor_name varchar (30),
+    -> cost decimal (10,2),
+    -> category varchar (15));
+      
+     create table issue(
+    -> lib_issue_id int,
+    -> book_no int,
+    -> member_id int ,
+    -> issue_date date ,
+    -> return_date date );
+Q2 
+ans desc member;
+    desc books ;
+    desc issue;
+Q3 
+ans drop table member;
+ 
+Q4)
+ ans  create table member
+     (member_id int primary key,
+     member_name varchar (50),
+     member_address varchar (50),
+      acc_open_date date,
+     membership_type varchar (50) check (membership_type in ('lifetime','annual','half yearly','quarterly')),
+     fees_paid decimal (10,2),
+     max_books_allowed int ,
+     penalty_amount decimal (10,2));
+
+Q5)
+ans alter table member
+    -> modify member_name varchar (40);
+
+Q6)
+ ans alter table  issue
+    -> add column reference varchar(30);
+Q7)
+ans alter table issue
+    -> drop column reference;
+Q8)
+ans  rename table issue to lib_issue;
+ 
+Q9)
+ans  insert into member
+    -> (member_id ,member_name,member_address,acc_open_date,membership_type,fees_paid,max_books_allowed,penalty_amount)
+    -> values
+    -> (1,"Richa Sharma","Pune","10-12-05","lifetime",25000,5,50),
+    -> (2,'garima sen ','pune',curdate(),'annual',1000,3,null);
+Q10)
+ans
+    INSERT INTO Member
+(member_id, member_name, member_address, acc_open_date, membership_type, fees_paid, max_books_allowed, penalty_amount)
+VALUES
+(3, 'Amit Patil', 'Mumbai', '2025-06-15', 'annual', 1000.00, 3, NULL),
+(4, 'Sneha Joshi', 'Nashik', '2024-08-20', 'lifetime', 25000.00, 5, 100.00),
+(5, 'Rahul Kulkarni', 'Pune', '2026-01-10', 'annual', 1000.00, 3, 25.00),
+(6, 'Priya Deshmukh', 'Nagpur', '2025-11-25', 'annual', 1000.00, 3, NULL),
+(7, 'Karan Shah', 'Kolhapur', '2023-05-18', 'lifetime', 25000.00, 5, 75.00);   
+
+Q11)
+ans   MySQL cannot safely fit those 21 characters into a 20-character column without losing data. Therefore, depending on MySQL's SQL mode, the operation can fail with a data truncation/error.
+ 
+Q12)
+ans   alter table member
+    -> add constraint check (max_books_allowed <100);
+Q13)
+ans  create table MemberBackup as
+    -> select * from member ;
+Q14)
+ans  alter table MemberBackup
+    -> add constraint check(max_books_allowed <100),
+    -> add constraint check (penalty_amount <=1000);
+Q15 )
+ans  drop table books;
+
+Q16) 
+ans  create table books(
+    -> book_no int primary key,
+    -> book_name varchar (50) not null ,
+    -> category varchar (50) check (category in('System','Fiction','Database','RDBMS','Others','Science')));
+
+Q17
+ans INSERT INTO Books
+(Book_Name, Author_Name, Cost, Category)
+VALUES ("Let Us C", "Dennis Ritchie", 450, "System");
+
+Q18)
+ans INSERT INTO Books
+(Book_Name, Author_Name, Cost, Category)
+VALUES ("Let Us C", "Dennis Ritchie", 450, "System");
+
+INSERT INTO Books
+(Book_Name, Author_Name, Cost, Category)
+VALUES ("Java: The Complete Reference", "Herbert Schildt", 650, "System");
+
+INSERT INTO Books
+(Book_Name, Author_Name, Cost, Category)
+VALUES ("Database System Concepts", "Abraham Silberschatz", 800, "Database");
+
+INSERT INTO Books
+(Book_Name, Author_Name, Cost, Category)
+VALUES ("The Alchemist", "Paulo Coelho", 350, "Fiction");
+
+INSERT INTO Books
+(Book_Name, Author_Name, Cost, Category)
+VALUES ("RDBMS Fundamentals", "Raghu Ramakrishnan", 700, "RDBMS");
+
+INSERT INTO Books
+(Book_Name, Author_Name, Cost, Category)
+VALUES ("A Brief History of Time", "Stephen Hawking", 500, "Science");
+Q19)
+ans select * from member;
+    select * from books;
+Q20)
+ans  drop table lib_issue;
+
+Q21)
+ans CREATE TABLE Issue (
+    ->     lib_issue_id INT PRIMARY KEY,
+    ->     book_no INT,
+    ->     FOREIGN KEY (book_no) REFERENCES Books(Book_No)
+    -> );
+Q22)
+ans insert into issue (
+    -> book_no,member_id,issue_date)
+    -> values
+    -> (101,1,"2024-12-10"),
+    -> (102,2,"2024-12-25"),
+    -> (104,1,"2025-01-15"),
+    -> (101,1,"2025-02-04"),
+    -> (104,2,"2025-03-15"),
+    -> (101,3,"2025-04-18");
+Q23)
+ans ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`assignment2`.`issue`, CONSTRAINT `issue_ibfk_1` FOREIGN KEY (`book_no`) REFERENCES `books` (`Book_No`))
+mysql>
+
+ Q24)
+ans UPDATE issue
+    -> SET issue_date = DATE_ADD("2025-03-15", INTERVAL 15 DAY)
+    -> WHERE lib_issue_id = 705;
+Q25)
+ans drop table issue;
+    drop table books;
+    drop table member;
+    
